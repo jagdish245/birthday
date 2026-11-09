@@ -181,9 +181,6 @@ $('document').ready(function(){
 	
 	$('#story').click(function(){
 		$(this).fadeOut('slow');
-		$('.cake').fadeOut('fast').promise().done(function(){
-			$('.message').fadeIn('slow');
-		});
 
 		var $messages = $(".message p");   // only inside .message
 		var totalMessages = $messages.length;
@@ -200,7 +197,18 @@ $('document').ready(function(){
 			}
 		}
 
-		msgLoop(0);
+		function showMessage() {
+			$('.cake').fadeOut('fast').promise().done(function(){
+				$('.message').fadeIn('slow');
+				msgLoop(0);
+			});
+		}
+
+		if (document.fonts && document.fonts.load) {
+			document.fonts.load('bold 60px Happy').then(showMessage, showMessage);
+		} else {
+			showMessage();
+		}
 	});
 
 });
